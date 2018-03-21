@@ -12,7 +12,6 @@ public class SignUp {
     public void checkPw(){checkImpl.checkUserPw();}
     public void checkPhone(){checkImpl.checkUserPhone();}
     public void checkAgree(){checkImpl.checkUserAgree();}
-
     public void checkStart(){
         checkId();
         checkPw();
