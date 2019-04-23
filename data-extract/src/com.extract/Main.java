@@ -1,33 +1,38 @@
 package com.extract;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        File file = new File( "data-extract/logs/log");
+        BufferedReader reader;
 
-        FileReader fileReader = new FileReader(file);
+        List<String> list = new ArrayList<>();
 
-        try {
+        reader = new BufferedReader(new FileReader("data-extract/logs/log.txt"));
 
-            int singleCh = 0;
+        String line = reader.readLine();
 
-            while ((singleCh = fileReader.read()) != -1) {
+        System.out.println("/***START***/");
+        while (line != null) {
 
-                System.out.print((char) singleCh);
+            if (line.contains("Request Data")) {
 
+                if (line.contains("\"ErrorCode\":\"01\"")) {
+
+                    System.out.println(line);
+
+                } else if (line.contains("\"ErrorCode\":\"01\"")) {
+
+                    System.out.println(line);
+
+                }
             }
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            fileReader.close();
+            line = reader.readLine();
         }
 
+        System.out.println("/***END***/");
     }
 }
