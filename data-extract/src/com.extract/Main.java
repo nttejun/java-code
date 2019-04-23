@@ -1,15 +1,13 @@
 package com.extract;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader reader;
-
-        List<String> list = new ArrayList<>();
 
         reader = new BufferedReader(new FileReader("data-extract/logs/log.txt"));
 
