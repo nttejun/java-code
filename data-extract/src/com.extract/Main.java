@@ -15,8 +15,42 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
 
+        /*** 파일 목록 추출 ***/
+        List<String> today = new ArrayList<>();
+        List<String> yesterday= new ArrayList<>();
+
+        String isTodayDir = "/data-extract/indentity-verify/example1/logs/today/";
+        String isYesterdayDir = "/data-extract/indentity-verify/example1/logs/yesterday/";
+
+        /*** 파일 배열에 담기 ***/
+        for (File info : new File(isTodayDir).listFiles()) {
+            if (info.isFile()) {
+                today.add(isTodayDir+info.getName());
+            }
+        }
+
+        for (File info : new File(isYesterdayDir).listFiles()) {
+            if (info.isFile()) {
+                yesterday.add(isYesterdayDir+info.getName());
+            }
+        }
+
+        /*** 오름차순 정렬 ***/
+        Ascending ascending = new Ascending();
+        Collections.sort(today, ascending);
+        Collections.sort(yesterday, ascending);
+
+        /*** 파일 목록 확인 ***/
+        for (int index = 0; index < today.size(); index++) {
+            System.out.println(today.get(index));
+        }
+
+        for (int index = 0; index < yesterday.size(); index++) {
+            System.out.println(yesterday.get(index));
+        }
+
         /*** 요청 데이터 추출 ***/
-        BufferedReader reqReader = new BufferedReader(new FileReader("/Users/wjjeong/devTmonet/easySign/server/data-extract/indentity-verify/logs/t-proxy1_smsci.txt_dosed.txt"));
+        BufferedReader reqReader = new BufferedReader(new FileReader("/data-extract/indentity-verify/logs/log.txt"));
 
         JSONParser reqJsonParser = new JSONParser();
         JSONObject reqJsonObject;
