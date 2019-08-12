@@ -1,13 +1,14 @@
 package io.inputstream;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class Main {
 
     @Test
-    void TEST_READ_FILE(){
+    public void TEST_READ_FILE(){
         assertEquals("test", "test");
     }
+
 }
