@@ -2,37 +2,53 @@ package com.wjjeong.xml;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
+import java.io.*;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class SignedInfo {
 
-    @Test
-    public void TEST_LOAD_XML(){
 
+
+    public Document makeDocument(String filePath){
         try {
-
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            InputStream inputStream = new FileInputStream(new File("/Users/wjjeong/wjjeong/dev/project/java-code/test-taxInvoice/src/com/wjjeong/original.xml"));
-            Document document = documentBuilderFactory.newDocumentBuilder().parse(inputStream);
+            InputStream inputStream = new FileInputStream(new File(filePath));
+            return documentBuilderFactory.newDocumentBuilder().parse(inputStream);
+        } catch (Exception e){
+            return null;
+        }
+    }
 
+    public String makeDocumentToString(Document document){
+        try {
             StringWriter stringWriter = new StringWriter();
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "false");
             transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
-            String output = stringWriter.toString();
-            assertEquals(output, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><TaxInvoice xmlns=\"urn:kr:or:kec:standard:Tax:ReusableAggregateBusinessInformationEntitySchemaModule:1:0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"urn:kr:or:kec:standard:Tax:ReusableAggregateBusinessInformationEntitySchemaModule:1:0 http://www.kec.or.kr/standard/Tax/TaxInvoiceSchemaModule_1.0.xsd\">\n" +
+            return stringWriter.toString();
+        } catch (Exception e){
+            return null;
+        }
+    }
+
+    @Test
+    public void TEST_LOAD_XML(){
+
+        SignedInfo signedInfo = new SignedInfo();
+        Document document = signedInfo.makeDocument("/Users/wjjeong/wjjeong/dev/project/java-code/test-taxInvoice/src/com.wjjeong.xml/original.xml");
+        assertEquals(signedInfo.makeDocumentToString(document), "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><TaxInvoice xmlns=\"urn:kr:or:kec:standard:Tax:ReusableAggregateBusinessInformationEntitySchemaModule:1:0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"urn:kr:or:kec:standard:Tax:ReusableAggregateBusinessInformationEntitySchemaModule:1:0 http://www.kec.or.kr/standard/Tax/TaxInvoiceSchemaModule_1.0.xsd\">\n" +
                     "    <ExchangedDocument>\n" +
                     "        <ID/>\n" +
                     "        <IssueDateTime>20190814240000</IssueDateTime>\n" +
@@ -107,6 +123,6 @@ public class SignedInfo {
                     "    </TaxInvoiceTradeLineItem>\n" +
                     "</TaxInvoice>");
 
-        } catch (Exception e){ }
     }
+
 }
