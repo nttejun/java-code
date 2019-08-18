@@ -15,6 +15,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.security.MessageDigest;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -55,6 +56,31 @@ public class SignedInfo {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Test
+    public void TEST_MAKE_DIGEST() {
+        String text = "가나다라마바사아자차카타파하abcdefghijklmnop";
+        try {
+            MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+            mDigest.update(text.getBytes());
+            byte[] bytesDigest = mDigest.digest();
+
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0;i<bytesDigest.length;i++) {
+                String hex = Integer.toHexString(0xff & bytesDigest[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            assertEquals("85fc3f00ec218f7f9f68ce49865b1894d511194b1dff192155fb715808109668", hexString.toString());
+
+        } catch (Exception e){
+
+        }
+
+
     }
 
     @Test
