@@ -9,15 +9,15 @@ public class SchoolMain {
         String jihun = "청소를 실시한다";
 
         SchoolMain schoolMain = new SchoolMain();
-        schoolMain.clean(minsun);
-        schoolMain.clean(wonjun);
-        schoolMain.clean(taesun);
-        schoolMain.clean(jihun);
+        schoolMain.cleaning(minsun);
+        schoolMain.cleaning(wonjun);
+        schoolMain.cleaning(taesun);
+        schoolMain.cleaning(jihun);
     }
 
-    public void clean(String student) {
+    public void cleaning(String student) {
         String doSometing = student + "청소를 한다";
         System.out.println(doSometing);
-
     }
+
 }
