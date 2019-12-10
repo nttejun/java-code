@@ -1,7 +1,6 @@
 package ticketseller;
 
 import audience.Audience;
-import ticket.Ticket;
 import ticketoffice.TicketOffice;
 
 public class TicketSeller {
@@ -12,14 +11,6 @@ public class TicketSeller {
     }
 
     public void sellTo(Audience audience){
-        if(audience.getBag().hasInvitation()){
-            Ticket ticket = ticketOffice.getTicket();
-            audience.getBag().setTicket(ticket);
-        } else {
-            Ticket ticket = ticketOffice.getTicket();
-            audience.getBag().minusAmount(ticket.getFee());
-            ticketOffice.plusAmount(ticket.getFee());
-            audience.getBag().setTicket(ticket);
-        }
+        ticketOffice.plusAmount(audience.buy(ticketOffice.getTicket()));
     }
 }
